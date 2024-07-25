@@ -1,0 +1,38 @@
+project:
+  type: website
+
+website:
+  title: "Portfolio"
+  favicon: "images/jpg"
+  
+  page-footer:
+    center: |
+      [Contact Udval Oyunsaikhan](mailto:udwalamir@gmail.com)
+    left: |
+      Made with [Quarto](https://quarto.org/)
+    right: |
+      [Github Code Repo](https://github.com/UdvalO)
+    background: "#ffffff"
+    
+  navbar:
+    left: 
+      - text: Home
+        href: index.qmd
+      - text: Projects
+        href: projects.qmd
+      - text: Resume
+        href: resume.qmd
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/UdvalO
+      - icon: linkedin
+        href: https://www.linkedin.com/in/o-udval/
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    code-fold: show
+    highlight-style: github
+

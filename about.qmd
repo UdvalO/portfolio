@@ -1,0 +1,24 @@
+---
+title: "About"
+image: images/bikep.jpg
+about:
+  template: broadside
+---
+
+Thank you for taking the time and showing curiosity to check out my portfolio. Here, you will find the projects I have completed since starting my study in April 2024. I will continue to update this portfolio with new projects. I am also open to collaborating on new projects—if you have a dataset and would like insights, feel free to reach out. Throughout my studies, I have different focus areas each semester:
+
+**Semester 1:** R, PowerBI, SQL, and Data Analysis
+
+**Semester 2:** Python, Tableau, ML, Statistics, & Business Analytics
+
+**Semester 3:** Marketing Analytics, A/B Testing, AI, & ML in Finance
+
+**Semester 4:** Currently, I am on the hunt for a research idea
+
+#### Outside this portfolio
+
+I hold a MSc in Sustainable Transport Degree from University of Leeds. I have published five articles, done podcast interviews and created and presented a video on public space at the UN Ministerial Summit in 2018.
+
+I love cooking and eating good food, so during COVID I started my own channel for cooking.
+
+[Facebook](https://www.facebook.com/HomeCookinUB/?locale=my_MM&_rdr) \| [Youtube](https://www.youtube.com/channel/UCR7Mq2AfzOJBitSPfOWq8gQ)

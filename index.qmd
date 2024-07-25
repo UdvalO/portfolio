@@ -1,0 +1,25 @@
+---
+title: "Udval Oyunsaikhan"
+image: images/photo.jpg
+about:
+  template: jolla
+  image-width: 20em
+  image-shape: round
+  links: 
+    - icon: linkedin
+      text: LinkedIn
+      href: www.linkedin.com/in/o-udval/
+    - icon: github
+      text: Github
+      href: https://github.com/UdvalO
+    - icon: datacamp
+      text: DataCamp
+      href: https://www.datacamp.com/portfolio/euv249281
+    - icon: envelope
+      text: Email
+      href: mailto:udwalamir@gmail.com
+---
+
+Hi! I’m Udval. My passion for data analysis was ignited during my time at Meta, where I worked extensively with large datasets. Currently, I am pursuing an MSc in International Business Administration with a specialization in Data Science at the University of Viadrina. This program is further developing my technical expertise and equipping me to drive data-driven enhancements in products, strategies, and operations. My interests lie in urban green mobility, transport data analysis, and trust and safety, with a particular focus on financial fraud and scams.
+
+Feel free to explore my work from my current studies and get in touch if you have any questions!
