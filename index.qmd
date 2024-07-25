@@ -8,7 +8,7 @@ about:
   links: 
     - icon: linkedin
       text: LinkedIn
-      href: www.linkedin.com/in/o-udval/
+      href: https://www.linkedin.com/in/o-udval/
     - icon: github
       text: Github
       href: https://github.com/UdvalO
