@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: e0bf85c6-4a0c-4af6-8a41-2cb918efe2e5
+      url: 'https://udvalo.quarto.pub/udvalo'

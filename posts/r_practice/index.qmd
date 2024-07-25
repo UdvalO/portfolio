@@ -1,0 +1,273 @@
+---
+title: "R Practice"
+date: "2024-07-01"
+categories: [R]
+image: "pokemon.png"
+---
+
+## Various R Assignments for Practice
+
+Through the course "Becoming Fluent in Data and Beyond," I completed five assignments focused on honing my R skills rather than performing in-depth analysis. These assignments provided hands-on experience with various data types, including time-series, geospatial, panel data, and webscrapping. Here I am sharing some of my favourite plots and analysis showcasing different skills.
+
+### Analysis of ViaRun event at the Viadrina University
+
+This practice provided valuable experience in working with time-series data, converting text data types into time format, and identifying implausible recordings.
+
+```{r}
+#| echo: true
+#| results: hide
+#| warning: false
+#| message: false
+
+# Load necessary libraries
+library(tidyverse)
+
+# Load data
+ViaRun_10_05_2023 <- readxl::read_xlsx("ViaRun_10_05_2023.xlsx")
+
+# Convert time string to POSIXct object and extract minutes and seconds (adjusted for the mistake)
+ViaRun_10_05_2023 <- ViaRun_10_05_2023 %>%
+  mutate(time = as.POSIXct(Zeit, format = "%Y-%m-%d %H:%M:%S"),
+         Minutes = hour(time),
+         Secs = minute(time))
+
+# Convert Minutes and Secs to a time object
+ViaRun_10_05_2023 <- ViaRun_10_05_2023 %>% 
+  mutate(Time_Fixed = as.POSIXct(paste0("00:", Minutes, ":", Secs), format = "%H:%M:%S"))
+
+# Filter out rows with NA in Time_Fixed column
+ViaRun_10_05_2023 <- ViaRun_10_05_2023 %>%
+  filter(!is.na(Time_Fixed))
+
+# Filter Implausible Records
+implausible_recording <- ViaRun_10_05_2023 %>%
+    filter(Time_Fixed <= as.POSIXct("00:13:07", format = "%H:%M:%S"))
+
+# Filter everything below 10 minutes
+ViaRun_10_05_2023 <- ViaRun_10_05_2023 %>%
+    filter(Time_Fixed >= as.POSIXct("00:10:00", format = "%H:%M:%S"))
+```
+
+```{r}
+#| echo: true
+#| results: hide
+#| warning: false
+#| message: false
+ViaRun_10_05_2023 %>%
+  filter(Gender != "divers") %>%
+  group_by(Gender) %>%
+  ggplot(aes(x = Time_Fixed, fill = Gender)) +
+    geom_density(alpha = 0.5, color = "NA") +
+    labs(title = "Density Plot of Time by Gender",
+       x = "Time", y = "Density") +
+    theme_minimal()
+```
+
+## Analysis of Pokemon players in Germany
+
+This was a good practice to work with geospatial data and creating interactive map. Pokemon GO gameplay data was used to plot players' behavior in Germany including frequency and movement.
+
+```{r}
+#| echo: true
+#| results: hide
+#| warning: false
+#| message: false
+
+# Load libraries
+library(leaflet)
+library(leaflet.extras)
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
+
+# Load Data
+GameData <- read_delim("GameplayLocationHistory.tsv")
+
+# Rename the columns
+GameData <- GameData %>%
+  rename(
+    lat = `Latitude of location reported by game`,
+    lon = `Longitude of location reported by game`)
+
+# Convert the GameData to a spatial object
+geodata_sf <- st_as_sf(GameData, coords = c("lon", "lat"), crs = 4326)
+
+# Load country boundaries using rnaturalearth
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+# Filter for Germany
+germany_boundary <- world %>% 
+                    filter(admin == "Germany")
+
+# Perform a spatial join to filter points within Germany
+germany_points <- st_join(geodata_sf, germany_boundary, join = st_within)
+
+
+# Extract lon and lat from geometry column
+germany_points <- germany_points %>%
+  st_coordinates() %>%
+  as.data.frame() %>%
+  rename(
+    lon = X,
+    lat = Y) %>%
+  bind_cols(germany_points %>% select(-geometry))
+
+# extracting only needed columns
+germany_points <- germany_points %>% 
+  select(1:3)
+```
+
+```{r}
+#| echo: true
+#| results: hide
+#| warning: false
+#| message: false
+
+library(viridis)
+
+# Calculating start, end date and max date
+start_date <- min(as.Date(germany_points$`Date and Time`, format = "%Y-%m-%d"), na.rm = TRUE)
+end_date <- max(as.Date(germany_points$`Date and Time`, format = "%Y-%m-%d"), na.rm = TRUE)
+max_days <- as.numeric(difftime(end_date, start_date, units = "days"))
+
+# Calculating the number of days each location has been recorded
+germany_points_map <- germany_points %>%
+  mutate(
+    `Date and Time` = as.Date(`Date and Time`),
+    days_recorded = as.numeric(difftime(`Date and Time`, start_date, units = "days")))
+
+# Define color palette with viridis
+color_palette <- colorNumeric(
+  palette = viridis(7),
+  domain = c(0, 20, 40, 60, 80, 100, 120)
+)
+
+# Create the interactive map
+leaflet(germany_points_map) %>%
+  addTiles() %>%
+  addCircleMarkers(
+    ~lon, ~lat,
+    color = ~color_palette(days_recorded),
+    radius = 3,
+    fillOpacity = 0.8,
+    popup = ~paste("Days Recorded:", days_recorded),
+    label = ~paste0(germany_points$`Date and Time`, " (Days since start: ", days_recorded, ")")
+  ) %>%
+  addLegend(
+    "bottomright",
+    pal = color_palette,
+    values = ~days_recorded,
+    title = paste("Days Since Start:", 
+                  paste("Start:", format(start_date, "%Y-%m-%d")),
+                  paste("End:", format(end_date, "%Y-%m-%d")),
+                  sep = "<br>"),
+    opacity = 1,
+    labFormat = labelFormat(transform = function(x) x)
+  ) %>% 
+  
+# Setting the view fixed to Berlin
+setView(lng = 13.4050, lat = 52.5200, zoom = 6)
+```
+
+## Analysis of most expensive paintings in history
+
+Here, I have scrapped a table from a [Wikipedia page](https://en.wikipedia.org/wiki/List_of_most_expensive_paintings#Progression_of_highest_prices_paid) and cleaned and used the scrapepd to analyze relationships between variables.
+
+```{r}
+#| echo: true
+#| results: hide
+#| warning: false
+#| message: false
+
+
+library(rvest)
+library(readr)
+
+# URL of the website to scrape
+url <- "https://en.wikipedia.org/wiki/List_of_most_expensive_paintings#Progression_of_highest_prices_paid"
+
+page <- read_html(url)
+
+df_wp <- page %>% 
+  html_element("table") %>% 
+  html_table(header = TRUE)
+
+paintings <- data.frame(df_wp)
+```
+
+```{r}
+#| echo: true
+#| results: hide
+#| warning: false
+#| message: false
+
+df <- read_csv("paintings_df.csv")
+
+# Selecting only needed columns
+df <- df %>% 
+  select(1, 3, 5, 6, 7)
+
+# Renaming columns required
+df <- df %>% 
+  rename(
+    Price = 1,
+    Date = 5
+  )
+
+# Cleaning Price column
+df <- df %>%
+  mutate(Price_cleaned = Price) %>%  
+  mutate(Price_cleaned = str_replace(Price_cleaned, "~", "")) %>%
+  mutate(Price_cleaned = str_replace(Price_cleaned, "\\+", "")) %>% 
+  mutate(Price_cleaned = str_replace(Price_cleaned, "\\$", "")) %>%
+  mutate(Price_cleaned = str_trim(Price_cleaned)) %>%
+  mutate(Price_cleaned = as.numeric(Price_cleaned))
+
+# taking earleir year for ranged years
+df <- df %>%
+  mutate(Year_cleaned = case_when(
+    # Handle years with shorthand end dates (e.g., 1904-07)
+    str_detect(Year, "\\d{4}-\\d{2}") ~ as.numeric(str_extract(Year, "\\d{4}")),
+    # If there's a dash or slash, take the first 4-digit number
+    str_detect(Year, "-|/") ~ as.numeric(str_extract(Year, "\\d{4}")),
+    # If it starts with "c.", take the 4-digit number
+    str_starts(Year, "c\\.") ~ as.numeric(str_extract(Year, "\\d{4}")),
+    # Otherwise, extract any 4-digit number
+    TRUE ~ as.numeric(str_extract(Year, "\\d{4}"))
+  ))
+
+# filtering out for final cleaned df
+df <- df %>%
+  select(-1, -4, -5)
+```
+Since the Wikipedia page did not provide the artist's age at the time of painting or at death. I merged another table containing this information to analyze the correlation between the price of the paintings and both the artists' ages at death and their ages at the time of painting.
+
+```{r}
+#| echo: true
+#| results: hide
+#| warning: false
+#| message: false
+
+
+plot3 <- df %>%
+  filter(Price_cleaned > 150)
+
+# built based on previous table, containing data above 150m USD
+df3 <- read_csv("above_150.csv")
+
+plot3$age_at_painting <- df3$Age.at.Painting
+plot3$age_at_death <- df3$Age.at.Death
+
+ggplot(plot3, aes(x = age_at_painting, y = Price_cleaned)) +
+  geom_point() +
+  geom_smooth(method = "loess", span = 0.8, se = FALSE, color = "blue") +
+  scale_x_continuous(breaks = seq(0, max(plot3$age_at_death), by = 20)) + 
+  theme_minimal() +
+  labs(
+    title = "List of Most Expensive Paintings",
+    subtitle = "Paintings over 150 million USD",
+    x = "Age at Painting",
+    y = "Adjusted Auction Price in Millions USD"
+  )
+```
+

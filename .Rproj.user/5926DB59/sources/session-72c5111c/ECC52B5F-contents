@@ -1,0 +1,27 @@
+---
+title: "Certification Exam"
+author: "Udval Oyunsaikhan"
+date: "2024-06-23"
+categories: [R, SQL, analysis]
+image: "certificate.jpg"
+---
+
+As part of the certified data analyst exam by DataCamp, I completed a two-hour exam testing my R and SQL skills, followed by a four-hour practical exam where I analyzed sales data from a stationary shop using R. You can see full exam submission [here](https://www.datacamp.com/datalab/w/efdedffd-1df1-4b55-be0e-4c7c6ed91eb7).
+
+The goal of the analysis was to determine the best-performing marketing method following the launch of new products. Additionally, I identified high-paying and loyal customers to prioritize them in the marketing strategy for future product launches. The analysis consisted of following steps:
+
+-   Identifying analysis goals
+
+-   Cleaning and validating data
+
+-   Conducting exploratory analysis
+
+-   Identifying key business metrics for future monitoring
+
+-   Recommendation
+
+-   Presenting my findings through 12 minute online video
+
+```{r}
+1 + 1
+```

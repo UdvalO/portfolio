@@ -1,0 +1,39 @@
+---
+title: "Sales Data Analysis"
+date: "2024-07-20"
+categories: [PowerBI, R, analysis]
+image: "dashboard.png"
+---
+
+## Analysis of Bike Sales Data in Australia
+
+::: columns
+::: {.column width="55%"}
+As part of the Data Analysis course, I conducted an analysis of sales data from a bike shop active in three states of Australia using PowerBI. [Take a look at the raw data...](https://www.kaggle.com/datasets/rohitsahoo/bicycle-store-dataset/data?select=Customer+List.csv)
+
+To enhance the validity of my findings and uncover deeper insights, I also explored external cycling trends by analyzing the National Annual Cycling Survey data from Australia. This analysis was performed using R, allowing me to cross-reference sales data with broader industry trends.
+:::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="40%"}
+![](images/external-01.png)
+:::
+:::
+
+The project information at glance:
+
+![](poster.png){width="2000"}
+
+Below are the detailed steps of the analysis:
+
+1.  **Business Question:** The analysis began with defining the business questions and objectives based on the availability of the dataset and its variables.
+
+2.  **Data Cleaning and Modeling:** The raw data presented several issues that required a degree of cleaning and preparation. To address these, I used DAX queries for data transformation and modeling.
+
+3.  **Visualization:** Using PowerBI, I created four dashboards to summarize the analysis comprehensively. These dashboards focused on identifying target customer segments, uncovering patterns in their purchasing behavior, and identifying high-value and loyal customers. Then I looked into the sales performance, including profit margins for popular products and seasonal trends. This approach allowed for a detailed view of the data, facilitating deeper insights into both customer dynamics and sales performance.
+
+4.  **External Trend:** Using R, I selected key variables from the dataset, prepared the data, and analyzed external trends in cycling.
+
+5.  **Report:** Finally, I compiled the findings and recommendations into a comprehensive report. Full report is available on request.

@@ -1,0 +1,50 @@
+{
+  "index.qmd": {
+    "index.html": "b176bd28"
+  },
+  "about.qmd": {
+    "about.html": "b0575051"
+  },
+  "posts/post-with-code/index.qmd": {
+    "index.html": "cdfaffd2"
+  },
+  "posts/welcome/index.qmd": {
+    "index.html": "3ea161ab"
+  },
+  "resume.qmd": {
+    "resume.html": "e228c139"
+  },
+  "projects.qmd": {
+    "projects.html": "b877b7ae"
+  },
+  "posts/post-with-plot/index.qmd": {
+    "index.html": "bd677cc1"
+  },
+  "semester_1.qmd": {
+    "semester_1.html": "9d4202f7"
+  },
+  "Projects/projects.qmd": {
+    "projects.html": "acc1d4ec"
+  },
+  "Projects/semester_1.qmd": {
+    "semester_1.html": "9e8f5924"
+  },
+  "posts/certificate/index.qmd": {
+    "index.html": "4cddb23f"
+  },
+  "posts/powerbi/index.qmd": {
+    "index.html": "44bb760e"
+  },
+  "posts/r_practice/index.qmd": {
+    "index.html": "0f891840"
+  },
+  "posts/health_commute/index.qmd": {
+    "index.html": "5dade91d"
+  },
+  "posts/health_commuting/index.qmd": {
+    "index.html": "45aa0924"
+  },
+  "posts/r_practice/index.rmarkdown": {
+    "index.html": "46bdac18"
+  }
+}
