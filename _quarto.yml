@@ -4,7 +4,7 @@ project:
 
 website:
   title: "Portfolio"
-  favicon: "images/jpg"
+  favicon: "images/photo.jpg"
   
   page-footer:
     center: |
