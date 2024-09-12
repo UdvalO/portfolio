@@ -46,5 +46,8 @@
   },
   "posts/r_practice/index.rmarkdown": {
     "index.html": "46bdac18"
+  },
+  "posts/llm_finetune/index.qmd": {
+    "index.html": "4d28aa52"
   }
 }

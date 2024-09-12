@@ -1,0 +1,20 @@
+---
+title: "Model Fine-tuning"
+date: "2024-09-10"
+categories: [Python, LLM, fine tune, Llama]
+image: "llama.jpg"
+format:
+  html
+---
+
+![](Cert.png){fig-align="center" width="404"}
+
+As part of the Intro to GenAI course by AWS, I completed a project where I fine-tuned the Llama 2 7B large language model for the financial domain. This was done on AWS infrastructure, utilizing tools like Python, Jupyter Notebook, Amazon SageMaker, and S3 bucket for seamless implementation.
+
+In this project I fine-tuned the Meta Llama 2 7B large language model in financial domain, deployed the fine-tuned model, and test it's text generation and domain knowledge capabilities.
+
+Below is the full code used for this project:
+
+![](code_1.png)
+
+![](code_2.png)
